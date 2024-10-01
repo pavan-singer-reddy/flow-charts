@@ -1,0 +1,82 @@
+@startuml
+title eDOST Website Activity Diagram with Decision Nodes
+
+[*] --> HomePage : Enter Website
+
+HomePage --> UsedEquipment : Select "Used Equipment"
+UsedEquipment --> ExternalWebsite : Redirect to https://usedequipment.tatahitachi.co.in/
+ExternalWebsite --> [*]
+
+HomePage --> TenderPortal : Select "Tender Portal"
+TenderPortal --> DecisionTender : Default to "Fresh Tenders"
+DecisionTender --> FreshTenders : [Fresh Tenders]
+DecisionTender --> TenderResults : [Tender Results]
+
+FreshTenders --> FilterTenders : Apply Filters (State, City, Department, Categories)
+FilterTenders --> SearchTenders : Search for Tenders (Ref ID, Date, Description, etc.)
+SearchTenders --> FilteredTenders : Display Filtered Search Results
+FilteredTenders --> FreshTenders
+
+TenderResults --> FilterResults : Apply Filters (State, City, Department, Contractor)
+FilterResults --> SearchResults : Search for Tenders (Ref ID, Brief, Keywords, etc.)
+SearchResults --> FilteredResults : Display Filtered Search Results
+FilteredResults --> TenderResults
+
+TenderPortal --> [*] : Exit Tender Portal
+
+HomePage --> MyWall : Select "My Wall"
+MyWall --> DecisionWall : Choose Playlist
+DecisionWall --> TataHitachiPlaylist : [Posted by Tata Hitachi]
+DecisionWall --> UserPlaylist : [Posted by User]
+TataHitachiPlaylist --> VideosOrImages : View Videos or Images
+UserPlaylist --> VideosOrImages : View Videos or Images
+MyWall --> [*] : Exit My Wall
+
+HomePage --> Videos : Select "Videos Section"
+Videos --> DefaultVideos : Display All YouTube Videos
+DefaultVideos --> SearchVideo : Search for Video
+SearchVideo --> FilteredVideos : Display Search Results
+Videos --> [*] : Exit Videos Section
+
+HomePage --> OnlineManual : Select "Online Manual"
+OnlineManual --> DecisionManual : Choose Category
+DecisionManual --> MiniHandbook : [Mini Handbook]
+DecisionManual --> PartsCatalogue : [Parts Catalogue]
+DecisionManual --> OperationalManual : [Operational Manual]
+
+MiniHandbook --> Subscribe : Click Subscribe Button
+PartsCatalogue --> Subscribe : Click Subscribe Button
+OperationalManual --> Subscribe : Click Subscribe Button
+Subscribe --> AccountPage : Redirect to "My Account" -> Subscribed Manuals
+AccountPage --> [*]
+
+HomePage --> RentalMarketPlace : Select "Rental Market Place"
+RentalMarketPlace --> DefaultProducts : Show Default Products
+DefaultProducts --> Filters : Apply Filters (Tonnage, Model, Location)
+Filters --> FilteredProducts : Display Filtered Products
+
+FilteredProducts --> ViewDetails : Select "View Details" on Product
+ViewDetails --> ProductDetails : View Full Details
+ProductDetails --> EnquireNow : Click "Enquire Now" for Product
+EnquireNow --> EnquiryPopup : Popup with Enquiry Form
+EnquiryPopup --> DecisionEnquiry : [Submit] or [Cancel]
+DecisionEnquiry --> SuccessMessage : [Submit] Show Success Message
+DecisionEnquiry --> ErrorMessage : [Cancel] Show Error Message
+ProductDetails --> GoBack : Click "Go Back"
+GoBack --> DefaultProducts : Return to Default Products
+
+DefaultProducts --> DecisionViewAll : Show [View All] Button (default)
+DecisionViewAll --> ViewAll : Click "View All"
+ViewAll --> ShowLess : Display All Products, Hide "View All", Show "Show Less"
+ShowLess --> DefaultView : Click "Show Less", Display Fewer Products, Hide "Show Less", Show "View All"
+DefaultView --> DefaultProducts
+
+FilteredProducts --> Interested : Select "Interested" on Product
+Interested --> EnquiryPopupInterested : Popup with Enquiry Form
+EnquiryPopupInterested --> DecisionInterested : [Submit] or [Cancel]
+DecisionInterested --> SuccessMessageInterested : [Submit] Show Success Message
+DecisionInterested --> ErrorMessageInterested : [Cancel] Show Error Message
+
+RentalMarketPlace --> [*] : Exit Rental Market Place
+
+@enduml
